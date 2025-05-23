@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<!-- 使用的组件：jquery echarts -->
+	<!-- 先导入jquery，再导入echarts，因为echarts要依赖jquery -->
+	<script src="js/jquery-3.6.0.js"></script>
+	<script src="js/echarts.min.js"></script>
+	<script src="js/china.js"></script>
+</head>
+
+<body>
+	<!-- div是容器组件，本身没有高度，并且div是块元素，独占一行 -->
+	<div id="map_div"></div>
+</body>
+
+<script>
+	// 文档就绪事件：当页面加载完成后，自动触发的事件
+	$(function () {
+		map();
+	})
+
+	function map() {
+		let chart = echarts.init(document.getElementById("map_div"));
+		$.getJSON('http://localhost:8000/map/', function (result) {
+			if (result.code == 200) {
+				chart.setOption(result.data);
+			}
+		})
+	}
+</script>
+
+<style>
+	#map_div {
+		/* 把div修改为既是块元素，也是行内元素 */
+		display: inline-block;
+		height: 500px;
+		width: 600px;
+		border: 1px solid red;
+	}
+</style>
+
+</html>
